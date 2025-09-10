@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="second-container">
+        <label class="name" for="">Count down name : </label>
+        <input class="input" type="text" id="user_name" placeholder="Name of CountDown" />
+        <br /><br />
+        <label class="name" for="">Time in minute :</label>
+        <input
+          id="time1"                                                                "
+          class="input"
+          placeholder="Timer in minutes"
+        />
+        <button class="submit" onclick="getInput()">submit</button>
+        <div>
+          <div>
+            <h1 class="timer">CountDown Timer</h1>
+          </div>
+          <div class="time">
+            <h3>Hour</h3>
+            <h3>Minute</h3>
+            <h3>Second</h3>
+          </div>  
+          <div class="boxes">
+            <div class="box" id="box1"></div>
+            :
+            <div class="box" id="box2"></div>
+            :
+            <div class="box" id="box3"></div>
+          </div>
+          <div class="button">
+            <button class="button1" id="pauseBtn" type="submit">Pause</button>
+            <button class="button1">Reset</button>
+            <button class="button1" >Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
