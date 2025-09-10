@@ -141,3 +141,9 @@ button.addEventListener("click", function () {
   clearInterval(count);
   alert("this is a not run");
 });
+
+let button3 = document.querySelector("#pauseBtn");
+button.addEventListener("click", function () {
+  clearInterval(count);
+  alert("this is a not run");
+});
