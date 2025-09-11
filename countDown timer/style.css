@@ -56,7 +56,7 @@
   /* color: #333; */
   box-sizing: border-box;
   box-shadow: 5px 5px 10px 2px rgba(37, 37, 37, 0.5);
-  margin-top: -35px;
+  margin-top: -22px;
 }
 
 #box1 {
@@ -112,4 +112,36 @@
   cursor: pointer;
   /* border-color: navy; */
   border-radius: 5px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Main container style */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    width: 80%;
+    margin: 50px auto;
+}
+
+/* Timer Name Style (Left Side) */
+.timer-name h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Stop Time Style (Right Side) */
+.stop-time h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
 }
