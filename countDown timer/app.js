@@ -94,6 +94,57 @@ function getInput() {
           showhour.innerHTML = formattedHours;
           showsmin.innerHTML = formattedMinutes;
           showsec.innerHTML = formattedSeconds+1;
+
+         // show stop and start time
+         // create the first parent div
+          let parentDiv = document.createElement("div")
+          
+          parentDiv.classList.add('container')
+          //  create the first childDiv
+          let firstChild = document.createElement('div')
+          
+          firstChild.classList.add('timer-name')
+          let hedding = document.createElement('h3')
+          hedding.id='timerName'
+          hedding.innerHTML = `Timer Name : ${ak}`
+          firstChild.appendChild(hedding)
+          parentDiv.appendChild(firstChild)
+
+          // create the second child
+          let secondChild = document.createElement('div')
+          secondChild.classList.add('stop-time')
+          let h3 = document.createElement('h3')
+          h3.classList.add('stopTime')
+          let  span1= document.createComment('span')
+          span1.id='hou'
+          
+          span1.innerHTML=formattedHours
+          let  span2= document.createComment('span')
+          span2.id='min'
+          span1.innerHTML=formattedMinutes
+
+          let  span3= document.createComment('span')
+          span3.id='sec'
+          span3.innerHTML=formattedMinutes
+          h3.appendChild(span1)
+          h3.appendChild(span2)
+          h3.appendChild(span3)
+          secondChild.appendChild(h3)
+          parentDiv.appendChild(secondChild)
+          
+
+          // secondChild.appendChild(parentDiv)
+          // parentDiv.appendChild(secondChild)
+
+
+
+          // document.body.appendChild()
+          document.body.appendChild(parentDiv)
+
+
+
+
+
           
           
         });
