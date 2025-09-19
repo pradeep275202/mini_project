@@ -1,45 +1,45 @@
-// let totalseconds;
+let totalseconds;
+let intervalID;
+let remainingSeconds;
+let gettime = document.getElementById("time1").value;
+
 function getInput() {
   let nameInput = document.querySelector("#user_name").value;
   let minuteInput = document.querySelector("#time1").value;
   let name = document.querySelector(".timer");
-
-  // window.globalVariable = minuteInput;
-  // console.log("this is a global",globalVariable)
-
   totalseconds = minuteInput * 60;
 
+  // console.log(totalseconds)
+
   if (nameInput == "") {
-    alert("please fill the Timer name");
+    alert("Please fill the Timer name");
     return false;
   }
   if (nameInput >= 0) {
-    alert("please fill the in the word in timer name");
+    alert("Please fill in the name without numbers");
     return false;
   } else {
     name.innerHTML = nameInput;
   }
 
   if (minuteInput == "") {
-    alert("please fill the input Time in  minutes");
+    alert("Please fill the input Time in minutes");
     return false;
   }
   if (minuteInput < 0) {
-    alert("please fill the positive number");
+    alert("Please fill a positive number for time");
     return false;
   }
 
-  startInterval();
+  startInterval(totalseconds);
 }
-let totalseconds;
-console.log("this is a totalseconds", totalseconds);
 
-function startInterval() {
-  let intervalID = setInterval(() => {
-    // window.globalVariable = totalSeconds;
-    let hours = Math.floor(totalseconds / 3600);
-    let minutes = Math.floor((totalseconds % 3600) / 60);
-    let seconds = totalseconds % 60;
+function startInterval(TotalSeconds) {
+  remainingSeconds = TotalSeconds;
+  intervalID = setInterval(() => {
+    let hours = Math.floor(remainingSeconds / 3600);
+    let minutes = Math.floor((remainingSeconds % 3600) / 60);
+    let seconds = remainingSeconds % 60;
 
     let hour = document.querySelector("#box1");
     let minute = document.querySelector("#box2");
@@ -53,11 +53,9 @@ function startInterval() {
     minute.innerHTML = formattedMinutes;
     second.innerHTML = formattedSeconds;
 
-    // console.log(hours, minutes, seconds);
+    remainingSeconds--;
 
-    totalseconds--;
-
-    if (totalseconds < 0) {
+    if (remainingSeconds < 0) {
       clearInterval(intervalID);
       alert("Countdown finished");
     }
@@ -65,47 +63,34 @@ function startInterval() {
 }
 
 function pauseInterval() {
-  // clearInterval(intervalID)
-  // console.log("clear")
   document.getElementById("pauseBtn").addEventListener("click", function () {
     clearInterval(intervalID);
-    let hours = Math.floor(totalSeconds / 3600);
-    let minutes = Math.floor((totalSeconds % 3600) / 60);
-    let seconds = totalSeconds % 60;
 
-    console.log("Remaining hours at pause:", hours, minutes, seconds);
-    let stop = document.querySelector("#stopTime");
+    let hours = Math.floor(remainingSeconds / 3600);
+    let minutes = Math.floor((remainingSeconds % 3600) / 60);
+    let seconds = remainingSeconds % 60;
+
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     let ak = document.querySelector(".input").value;
 
-    // show stop and start time
-    // create the first parent div
     let parentDiv = document.createElement("div");
-
     parentDiv.classList.add("container");
-    //  create the first childDiv
-    let firstChild = document.createElement("div");
 
+    let firstChild = document.createElement("div");
     firstChild.classList.add("timer-name");
-    let hedding = document.createElement("h3");
-    hedding.id = "timerName";
-    hedding.innerHTML = `Timer Name : ${ak}`;
-    firstChild.appendChild(hedding);
+    let heading = document.createElement("h3");
+    heading.id = "timerName";
+    heading.innerHTML = `Timer Name : ${ak}`;
+    firstChild.appendChild(heading);
     parentDiv.appendChild(firstChild);
 
-    // create the second child
     let secondChild = document.createElement("div");
-    //add class on div
     secondChild.classList.add("stop-time");
-    // create h3
     let h3 = document.createElement("h3");
-    //add class on h3
     h3.classList.add("stopTime");
-    //  console.log("this is a current time",currentTime)
-    console.log("this is a total seconds", totalSeconds);
 
     let now = new Date();
     let hou = now.getHours();
@@ -113,82 +98,71 @@ function pauseInterval() {
     let sec = now.getSeconds();
 
     let currentTime = `Stop Time - ${hou} : ${min} : ${sec},`;
-    console.log(currentTime);
-
-    h3.innerHTML = `${currentTime}       Remining Time - ${formattedHours}:${formattedMinutes}:${
+    h3.innerHTML = `${currentTime} Remaining Time - ${formattedHours}:${formattedMinutes}:${
       formattedSeconds + 1
     }`;
-
     secondChild.appendChild(h3);
-    //append second child in the parent div
     parentDiv.appendChild(secondChild);
-
     document.body.appendChild(parentDiv);
   });
 }
+pauseInterval();
 
-function startInterval() {
+function againStartInterval() {
   document.getElementById("startBtn").addEventListener("click", function () {
-    clearInterval(intervalID);
+    startInterval(remainingSeconds);
+    // if(!gettime){
+    //   alert("first stop after start")
+    //   return false;
+    // }
 
-    let timePassed = totalseconds - totalSeconds;
+    let timePassed = totalseconds - remainingSeconds;
 
-    console.log("time passed", timePassed - 1);
     let hours = Math.floor(timePassed / 3600);
     let minutes = Math.floor((timePassed % 3600) / 60);
     let seconds = timePassed % 60;
 
-    console.log("Remaining hours at pause:", hours, minutes, seconds);
-    let stop = document.querySelector("#stopTime");
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-    // let timePassed = totalseconds-totalSeconds;
-    // console.log('time passed',timePassed-1)
-
     let ak = document.querySelector(".input").value;
 
     let parentDiv = document.createElement("div");
-
     parentDiv.classList.add("container");
 
     let firstChild = document.createElement("div");
-
     firstChild.classList.add("timer-name");
-    let hedding = document.createElement("h3");
-    hedding.id = "timerName";
-    hedding.innerHTML = `Timer Name : ${ak}`;
-    firstChild.appendChild(hedding);
+    let heading = document.createElement("h3");
+    heading.id = "timerName";
+    heading.innerHTML = `Timer Name : ${ak}`;
+    firstChild.appendChild(heading);
     parentDiv.appendChild(firstChild);
 
-    // create the second child
     let secondChild = document.createElement("div");
-    //add class on div
-    secondChild.classList.add("stop-time");
-    // create h3
+    secondChild.classList.add("start-time");
     let h3 = document.createElement("h3");
-    //add class on h3
-    h3.classList.add("stopTime");
-    //  console.log("this is a current time",currentTime)
-    console.log("this is a total seconds", totalSeconds);
+    h3.classList.add("startTime");
+
     let now = new Date();
     let hou = now.getHours();
     let min = now.getMinutes();
     let sec = now.getSeconds();
 
-    let currentTime = `Start time - ${hou} : ${min} : ${sec},`;
-    console.log(currentTime);
-
-    h3.innerHTML = `${currentTime}  Time passed - ${formattedHours}:${formattedMinutes}:${
+    let currentTime = `Start Time - ${hou} : ${min} : ${sec},`;
+    h3.innerHTML = `${currentTime} Time Passed - ${formattedHours}:${formattedMinutes}:${
       formattedSeconds - 1
     }`;
-
     secondChild.appendChild(h3);
-    //append second child in the parent div
     parentDiv.appendChild(secondChild);
-
     document.body.appendChild(parentDiv);
   });
 }
-startInterval();
+againStartInterval();
+
+function resetData(){
+  document.getElementById("reset-data").addEventListener("click", function () {
+  document.getElementById("main-container").reset();
+});
+}
+resetData()
