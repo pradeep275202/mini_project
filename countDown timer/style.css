@@ -41,6 +41,7 @@
   margin: 20px auto;
   /* border: 1px solid #ccc; */
   padding: 10px;
+  gap: 5px;
 }
 
 .box {
@@ -60,10 +61,22 @@
   margin-top: -22px;
   /* width: auto;
   height: auto; */
+  /* overflow: scroll; */
+  /* font-size: 30px; */
+  
 }
 
 #box1 {
   background-color: white;
+  /* overflow: visible; */
+  /* overflow: scroll; */
+  /* width: 30%; */
+  /* overflow: hidden; */
+  overflow-x: scroll; /* Hide horizontal scrollbar */
+  overflow-y: scroll;
+  display: flex;
+
+  
   
  
 }
@@ -71,6 +84,9 @@
   background-color: white;
 }
 #box3 {
+  background-color: white;
+}
+#box4{
   background-color: white;
 }
 
@@ -103,11 +119,21 @@
   width: 100px;
   border-radius: 10px;
 }
-.button1:hover {
+/* .button1:hover {
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+} */
+/* .button2:hover {
   background-color: blue;
   color: white;
   font-weight: bold;
 }
+.button3:hover {
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+} */
 .submit {
   padding: 5px;
   font-weight: bold;

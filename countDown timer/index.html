@@ -10,7 +10,7 @@
    <!-- <form  id="form"> -->
      <div class="main-container">
       <div class="second-container">
-        <label class="name" for="">Timer name : </label>
+        <label class="name" >Timer name : </label>
         <input
           class="input"
           type="text"
@@ -25,17 +25,21 @@
           class="input"
           placeholder="Time in minutes"
         />
-        <button class="submit" onclick="getInput()">submit</button>
+        <button class="submit" id="submit-time" onclick="getInput()">submit</button>
         <div>
           <div>
             <h1 class="timer">CountDown Timer</h1>
           </div>
           <div class="time">
+            <h3>Day</h3>
             <h3>Hour</h3>
             <h3>Minute</h3>
             <h3>Second</h3>
+            
           </div>
           <div class="boxes">
+            <div class="box" id="box4"></div>
+            :
             <div class="box" id="box1"></div>
             :
             <div class="box" id="box2"></div>
