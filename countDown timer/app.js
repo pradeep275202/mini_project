@@ -1,63 +1,84 @@
-// let totalseconds;
+let totalseconds;
+let intervalID;
+let remainingSeconds;
+let gettime = document.getElementById("time1").value;
+let disableBtn = (document.getElementById("startBtn").disabled = true);
+let disablePause = (document.getElementById("pauseBtn").disabled = true);
+
 function getInput() {
   let nameInput = document.querySelector("#user_name").value;
   let minuteInput = document.querySelector("#time1").value;
   let name = document.querySelector(".timer");
+  let bigIntNuber = BigInt(minuteInput);
+  // let Minutes = Number(bigIntNuber);
 
-  // window.globalVariable = minuteInput;
-  // console.log("this is a global",globalVariable)
+  totalseconds = bigIntNuber * BigInt(60);
 
-  totalseconds = minuteInput * 60;
+  function enableBtns() {
+    // return false;
+    if (bigIntNuber > 0) {
+      // let disableBtn = (document.getElementById("startBtn").disabled = false);
+      let disablePause = (document.getElementById("pauseBtn").disabled = false);
+      document.getElementById("submit-time").disabled = true;
+    }
+    return false;
+  }
+  enableBtns();
+
+  // console.log(totalseconds)
 
   if (nameInput == "") {
-    alert("please fill the Timer name");
+    alert("Please fill the Timer name");
+
     return false;
   }
   if (nameInput >= 0) {
-    alert("please fill the in the word in timer name");
+    alert("Please fill in the name without numbers");
+    document.getElementById("submit-time").disabled = false;
     return false;
   } else {
     name.innerHTML = nameInput;
   }
 
   if (minuteInput == "") {
-    alert("please fill the input Time in  minutes");
+    alert("Please fill the input Time in minutes");
     return false;
   }
   if (minuteInput < 0) {
-    alert("please fill the positive number");
+    alert("Please fill a positive number for time");
     return false;
   }
 
-  startInterval();
+  startInterval(totalseconds);
 }
-let totalseconds;
-console.log("this is a totalseconds", totalseconds);
 
-function startInterval() {
-  let intervalID = setInterval(() => {
-    // window.globalVariable = totalSeconds;
-    let hours = Math.floor(totalseconds / 3600);
-    let minutes = Math.floor((totalseconds % 3600) / 60);
-    let seconds = totalseconds % 60;
+function startInterval(TotalSeconds) {
+  remainingSeconds = TotalSeconds;
+  intervalID = setInterval(() => {
+     let days = Number(remainingSeconds / BigInt(86400));
+    let hours = Number(remainingSeconds / BigInt(3600));
+    let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
+    let seconds = remainingSeconds % BigInt(60);
+    // let days = Number(remainingSeconds/BigInt(hour))
 
     let hour = document.querySelector("#box1");
     let minute = document.querySelector("#box2");
     let second = document.querySelector("#box3");
+    let day = document.querySelector("#box4");
 
+    let fomatedDay = days < 10 ? `0${days}` : days;
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
+    day.innerHTML = fomatedDay;
     hour.innerHTML = formattedHours;
     minute.innerHTML = formattedMinutes;
     second.innerHTML = formattedSeconds;
 
-    // console.log(hours, minutes, seconds);
+    remainingSeconds -= BigInt(1);
 
-    totalseconds--;
-
-    if (totalseconds < 0) {
+    if (remainingSeconds < 0) {
       clearInterval(intervalID);
       alert("Countdown finished");
     }
@@ -65,47 +86,43 @@ function startInterval() {
 }
 
 function pauseInterval() {
-  // clearInterval(intervalID)
-  // console.log("clear")
   document.getElementById("pauseBtn").addEventListener("click", function () {
     clearInterval(intervalID);
-    let hours = Math.floor(totalSeconds / 3600);
-    let minutes = Math.floor((totalSeconds % 3600) / 60);
-    let seconds = totalSeconds % 60;
 
-    console.log("Remaining hours at pause:", hours, minutes, seconds);
-    let stop = document.querySelector("#stopTime");
+    let disableBtn = (document.getElementById("pauseBtn").disabled = true);
+    let enableBtn = (document.getElementById("startBtn").disabled = false);
+
+    let hours = Number(remainingSeconds / BigInt(3600));
+    let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
+    let seconds = remainingSeconds % BigInt(60);
+
+    let enable = document.getElementById("pauseBtn");
+    enable.style.cursor = "default";
+    let btnColor = document.getElementById("startBtn");
+
+    btnColor.style.cursor = "pointer";
+
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     let ak = document.querySelector(".input").value;
 
-    // show stop and start time
-    // create the first parent div
     let parentDiv = document.createElement("div");
-
     parentDiv.classList.add("container");
-    //  create the first childDiv
-    let firstChild = document.createElement("div");
 
+    let firstChild = document.createElement("div");
     firstChild.classList.add("timer-name");
-    let hedding = document.createElement("h3");
-    hedding.id = "timerName";
-    hedding.innerHTML = `Timer Name : ${ak}`;
-    firstChild.appendChild(hedding);
+    let heading = document.createElement("h3");
+    heading.id = "timerName";
+    heading.innerHTML = `Timer Name : ${ak}`;
+    firstChild.appendChild(heading);
     parentDiv.appendChild(firstChild);
 
-    // create the second child
     let secondChild = document.createElement("div");
-    //add class on div
     secondChild.classList.add("stop-time");
-    // create h3
     let h3 = document.createElement("h3");
-    //add class on h3
     h3.classList.add("stopTime");
-    //  console.log("this is a current time",currentTime)
-    console.log("this is a total seconds", totalSeconds);
 
     let now = new Date();
     let hou = now.getHours();
@@ -113,82 +130,83 @@ function pauseInterval() {
     let sec = now.getSeconds();
 
     let currentTime = `Stop Time - ${hou} : ${min} : ${sec},`;
-    console.log(currentTime);
-
-    h3.innerHTML = `${currentTime}       Remining Time - ${formattedHours}:${formattedMinutes}:${
-      formattedSeconds + 1
-    }`;
-
+    h3.innerHTML = `${currentTime} Remaining Time - ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     secondChild.appendChild(h3);
-    //append second child in the parent div
     parentDiv.appendChild(secondChild);
-
     document.body.appendChild(parentDiv);
   });
 }
+pauseInterval();
 
-function startInterval() {
+function againStartInterval() {
   document.getElementById("startBtn").addEventListener("click", function () {
-    clearInterval(intervalID);
+    startInterval(remainingSeconds);
+    let disableBtn = (document.getElementById("startBtn").disabled = true);
+    let enableBtn = (document.getElementById("pauseBtn").disabled = false);
+    let btnColor = document.getElementById("startBtn");
+    btnColor.style.color = "";
+    btnColor.style.backgroundColor = "";
+    btnColor.style.cursor = "default";
+    let enable = document.getElementById("pauseBtn");
+    enable.style.cursor = "pointer";
 
-    let timePassed = totalseconds - totalSeconds;
+    let timePassed = totalseconds - remainingSeconds;
 
-    console.log("time passed", timePassed - 1);
-    let hours = Math.floor(timePassed / 3600);
-    let minutes = Math.floor((timePassed % 3600) / 60);
-    let seconds = timePassed % 60;
+    let hours = Number(timePassed / BigInt(3600));
+    let minutes = Number((timePassed % BigInt(3600)) / BigInt(60));
+    let seconds = timePassed % BigInt(60);
 
-    console.log("Remaining hours at pause:", hours, minutes, seconds);
-    let stop = document.querySelector("#stopTime");
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-    // let timePassed = totalseconds-totalSeconds;
-    // console.log('time passed',timePassed-1)
-
     let ak = document.querySelector(".input").value;
 
     let parentDiv = document.createElement("div");
-
     parentDiv.classList.add("container");
 
     let firstChild = document.createElement("div");
-
     firstChild.classList.add("timer-name");
-    let hedding = document.createElement("h3");
-    hedding.id = "timerName";
-    hedding.innerHTML = `Timer Name : ${ak}`;
-    firstChild.appendChild(hedding);
+    let heading = document.createElement("h3");
+    heading.id = "timerName";
+    heading.innerHTML = `Timer Name : ${ak}`;
+    firstChild.appendChild(heading);
     parentDiv.appendChild(firstChild);
 
-    // create the second child
     let secondChild = document.createElement("div");
-    //add class on div
-    secondChild.classList.add("stop-time");
-    // create h3
+    secondChild.classList.add("start-time");
     let h3 = document.createElement("h3");
-    //add class on h3
-    h3.classList.add("stopTime");
-    //  console.log("this is a current time",currentTime)
-    console.log("this is a total seconds", totalSeconds);
+    h3.classList.add("startTime");
+
     let now = new Date();
     let hou = now.getHours();
     let min = now.getMinutes();
     let sec = now.getSeconds();
 
-    let currentTime = `Start time - ${hou} : ${min} : ${sec},`;
-    console.log(currentTime);
-
-    h3.innerHTML = `${currentTime}  Time passed - ${formattedHours}:${formattedMinutes}:${
-      formattedSeconds - 1
-    }`;
-
+    let currentTime = `Start Time - ${hou} : ${min} : ${sec},`;
+    h3.innerHTML = `${currentTime} Time Passed - ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     secondChild.appendChild(h3);
-    //append second child in the parent div
     parentDiv.appendChild(secondChild);
-
     document.body.appendChild(parentDiv);
   });
 }
-startInterval();
+againStartInterval();
+
+// function resetData(){
+//   document.getElementById("reset-data").addEventListener("click", function () {
+//   document.getElementById("main-container").reset();
+// });
+// }
+// resetData()
+
+// function disableBtn() {
+//     document.getElementById("myBtn").disabled = true;
+// }
+// disableBtn()
+
+// function enableBtn() {
+//     document.getElementById("myBtn").disabled = false;
+// }
+// enableBtn
+
+// function day() {}
