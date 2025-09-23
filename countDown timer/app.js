@@ -55,11 +55,11 @@ function getInput() {
 function startInterval(TotalSeconds) {
   remainingSeconds = TotalSeconds;
   intervalID = setInterval(() => {
-     let days = Number(remainingSeconds / BigInt(86400));
-    let hours = Number(remainingSeconds / BigInt(3600));
+    let days = Number(remainingSeconds / BigInt(86400)); 
+    let hours = Number((remainingSeconds % BigInt(86400)) / BigInt(3600)); 
     let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
-    let seconds = remainingSeconds % BigInt(60);
-    // let days = Number(remainingSeconds/BigInt(hour))
+    let seconds = Number(remainingSeconds % BigInt(60)); 
+
 
     let hour = document.querySelector("#box1");
     let minute = document.querySelector("#box2");
