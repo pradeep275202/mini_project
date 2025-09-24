@@ -6,11 +6,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-   <!-- <form  id="form"> -->
-     <div class="main-container">
+  <body>    
+    <div class="main-container">
       <div class="second-container">
-        <label class="name" >Timer name : </label>
+        <label class="name">Timer name : </label>
         <input
           class="input"
           type="text"
@@ -25,46 +24,40 @@
           class="input"
           placeholder="Time in minutes"
         />
-        <button class="submit" id="submit-time" onclick="getInput()">submit</button>
+        <button class="submit" id="submit-time" onclick="getInput()">
+          submit
+        </button>
         <div>
           <div>
             <h1 class="timer">CountDown Timer</h1>
           </div>
           <div class="time">
+            <h3>Year</h3>
             <h3>Day</h3>
             <h3>Hour</h3>
             <h3>Minute</h3>
             <h3>Second</h3>
-            
           </div>
           <div class="boxes">
-            <div class="box" id="box4"></div>
+            <div class="box1" style="width: auto" id="box5">00</div>
             :
-            <div class="box" id="box1"></div>
+            <div class="box1" style="width: auto" id="box4">00</div>
             :
-            <div class="box" id="box2"></div>
+            <div class="box" style="width: auto" id="box1">00</div>
             :
-            <div class="box" id="box3"></div>
+            <div class="box" style="width: auto" id="box2">00</div>
+            :
+            <div class="box" style="width: auto" id="box3">00</div>
           </div>
           <div class="button">
-            <button class="button1" type="button" id="pauseBtn" >Pause</button>
+            <button class="button1" type="button" id="pauseBtn">Pause</button>
             <button class="button1" id="reset-data">Reset</button>
-            <button class="button1" id="startBtn"  >Start</button>
+            <button class="button1" id="startBtn">Start</button>
           </div>
         </div>
       </div>
-      <!-- <div class="container">
-        <div class="timer-name">
-          <h3> <span id="timerName"></span></h3>
-        </div>
-        <div class="stop-time">
-          <h3 class="stopTime"></h3>
-          <span id="hou"></span>: <span id="min"></span>:
-          <span id="sec"></span>
-        </div>
-      </div> -->
     </div>
-   <!-- </form> -->
+
     <script src="app.js"></script>
   </body>
 </html>

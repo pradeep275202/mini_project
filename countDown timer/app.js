@@ -2,8 +2,16 @@ let totalseconds;
 let intervalID;
 let remainingSeconds;
 let gettime = document.getElementById("time1").value;
-let disableBtn = (document.getElementById("startBtn").disabled = true);
-let disablePause = (document.getElementById("pauseBtn").disabled = true);
+// let userName = document.querySelector("#user_name").value;
+// console.log("user name : ",userName)
+let disableBtn = document.getElementById("startBtn");
+let disablePause = document.getElementById("pauseBtn");
+
+disableBtn.disabled = true;
+disablePause.disabled = true;
+
+disableBtn.style.cursor = "not-allowed"
+disablePause.style.cursor = "not-allowed"
 
 function getInput() {
   let nameInput = document.querySelector("#user_name").value;
@@ -34,7 +42,8 @@ function getInput() {
   }
   if (nameInput >= 0) {
     alert("Please fill in the name without numbers");
-    document.getElementById("submit-time").disabled = false;
+    
+
     return false;
   } else {
     name.innerHTML = nameInput;
@@ -48,6 +57,25 @@ function getInput() {
     alert("Please fill a positive number for time");
     return false;
   }
+  disablePause.style.cursor = "pointer"
+
+    document.querySelector("#user_name").value = '';
+    document.querySelector("#time1").value = '';
+
+    // let box1Style = document.querySelector(".box1")
+    // box1Style.style.width = "auto"
+
+    // let stylebox1 = box1Style.length
+    // console.log(stylebox1)
+
+
+  // document.getElementById('user_name').value = '';
+  // document.getElementById('time1').value = '';
+
+  let disableSubmitBtn = document.getElementById("submit-time");
+    disableSubmitBtn.disabled= true;
+    disableSubmitBtn.style.cursor = "not-allowed";
+    // disableSubmitBtn.style.backgroundColor = 'red';
 
   startInterval(totalseconds);
 }
@@ -55,22 +83,25 @@ function getInput() {
 function startInterval(TotalSeconds) {
   remainingSeconds = TotalSeconds;
   intervalID = setInterval(() => {
-    let days = Number(remainingSeconds / BigInt(86400)); 
+    let years = Number(remainingSeconds / BigInt(31536000));  
+    let days = Number((remainingSeconds % BigInt(31536000)) / BigInt(86400)); 
     let hours = Number((remainingSeconds % BigInt(86400)) / BigInt(3600)); 
-    let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
+    let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));  
     let seconds = Number(remainingSeconds % BigInt(60)); 
 
-
+    let year = document.querySelector("#box5")
     let hour = document.querySelector("#box1");
     let minute = document.querySelector("#box2");
     let second = document.querySelector("#box3");
     let day = document.querySelector("#box4");
 
+    let formatedYear = years < 10 ? `${years}`:years;
     let fomatedDay = days < 10 ? `0${days}` : days;
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
+    year.innerHTML = formatedYear
     day.innerHTML = fomatedDay;
     hour.innerHTML = formattedHours;
     minute.innerHTML = formattedMinutes;
@@ -89,19 +120,37 @@ function pauseInterval() {
   document.getElementById("pauseBtn").addEventListener("click", function () {
     clearInterval(intervalID);
 
-    let disableBtn = (document.getElementById("pauseBtn").disabled = true);
-    let enableBtn = (document.getElementById("startBtn").disabled = false);
+    let disableBtn = document.getElementById("pauseBtn");
+    let enableBtn = document.getElementById("startBtn");
+    disableBtn.disabled = true;
+    enableBtn.disabled = false;
 
-    let hours = Number(remainingSeconds / BigInt(3600));
-    let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
-    let seconds = remainingSeconds % BigInt(60);
+    disableBtn.style.cursor = 'not-allowed'
+    enableBtn.style.cursor = "pointer";
+    disableBtn.style.color = "";
+    disableBtn.style.backgroundColor = "";
+    enableBtn.style.color = "";
+    enableBtn.style.backgroundColor = "";
 
-    let enable = document.getElementById("pauseBtn");
-    enable.style.cursor = "default";
-    let btnColor = document.getElementById("startBtn");
+   let years = Number(remainingSeconds / BigInt(31536000));  
+    let days = Number((remainingSeconds % BigInt(31536000)) / BigInt(86400)); 
+    let hours = Number((remainingSeconds % BigInt(86400)) / BigInt(3600)); 
+    let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));  
+    let seconds = Number(remainingSeconds % BigInt(60));  
 
-    btnColor.style.cursor = "pointer";
 
+    // let hours = Number(remainingSeconds / BigInt(3600));
+    // let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
+    // let seconds = remainingSeconds % BigInt(60);
+
+    // let enable = document.getElementById("pauseBtn");
+    // enable.style.cursor = "default";
+    // let btnColor = document.getElementById("startBtn");
+
+    // btnColor.style.cursor = "pointer";
+
+    let formatedYear = years < 10 ? `${years}`:years;
+    let formatedDays = days<10 ? `0${days}` : days;
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -130,7 +179,7 @@ function pauseInterval() {
     let sec = now.getSeconds();
 
     let currentTime = `Stop Time - ${hou} : ${min} : ${sec},`;
-    h3.innerHTML = `${currentTime} Remaining Time - ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    h3.innerHTML = `${currentTime} Remaining Time -  year-${formatedYear}: Day-${formatedDays}: Hour-${formattedHours}: Minute-${formattedMinutes}: Second-${formattedSeconds}`;
     secondChild.appendChild(h3);
     parentDiv.appendChild(secondChild);
     document.body.appendChild(parentDiv);
@@ -141,21 +190,47 @@ pauseInterval();
 function againStartInterval() {
   document.getElementById("startBtn").addEventListener("click", function () {
     startInterval(remainingSeconds);
-    let disableBtn = (document.getElementById("startBtn").disabled = true);
-    let enableBtn = (document.getElementById("pauseBtn").disabled = false);
+    let disableBtn = document.getElementById("startBtn");
+    let enableBtn = document.getElementById("pauseBtn");
     let btnColor = document.getElementById("startBtn");
-    btnColor.style.color = "";
-    btnColor.style.backgroundColor = "";
-    btnColor.style.cursor = "default";
-    let enable = document.getElementById("pauseBtn");
-    enable.style.cursor = "pointer";
+
+    // if(!disableBtn){
+    //   disableBtn.style.cursor = "not-allowed"
+    // }
+    // if(!enableBtn){
+    //   enableBtn.style.cursor = "not-allowed"
+    // }
+    // disableBtn.style.cursor = 'not-allowed';
+
+    // disableBtn.style.cursor = 'not-allowed';
+    // enableBtn.style.cursor = 'not-allowed';
+    // if(disableBtn = true){
+    //   disableBtn.style.cursor ="not-allowed"
+    // }
+
+    disableBtn.disabled = true;
+    enableBtn.disabled = false;
+    
+     disableBtn.style.cursor = "not-allowed";
+    enableBtn.style.cursor = "pointer";
+    
+
+
+
+    // btnColor.style.color = "";
+    // btnColor.style.pauseBtnbackgroundColor = "";
+    // btnColor.style.cursor = "default";
+    // let enable = document.getElementById("pauseBtn");
+    // enable.style.cursor = "pointer";
 
     let timePassed = totalseconds - remainingSeconds;
-
+    
+    let days = Number(timePassed / BigInt(86400)); 
     let hours = Number(timePassed / BigInt(3600));
     let minutes = Number((timePassed % BigInt(3600)) / BigInt(60));
     let seconds = timePassed % BigInt(60);
-
+    
+    let formatedDays = days<10 ? `0${days}` : days;
     let formattedHours = hours < 10 ? `0${hours}` : hours;
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -184,7 +259,7 @@ function againStartInterval() {
     let sec = now.getSeconds();
 
     let currentTime = `Start Time - ${hou} : ${min} : ${sec},`;
-    h3.innerHTML = `${currentTime} Time Passed - ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    h3.innerHTML = `${currentTime} Time Passed - ${formatedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     secondChild.appendChild(h3);
     parentDiv.appendChild(secondChild);
     document.body.appendChild(parentDiv);
