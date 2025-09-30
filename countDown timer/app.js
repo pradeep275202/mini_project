@@ -234,7 +234,7 @@ function againStar(){
     // enableBtn.style.cursor = 'not-allowed';
     // if(disableBtn = true){
     //   disableBtn.style.cursor ="not-allowed"
-    // }
+    // }disableBtn.style.cursor = "not-allowed";
 
     disableBtn.disabled = true;
     enableBtn.disabled = false;
@@ -290,37 +290,47 @@ function againStar(){
     document.body.appendChild(parentDiv);
 }
 
-// function resetTimer() {
-//   document.getElementById("reset-data").addEventListener("click", function () {
+function resetTimer() {
+  document.getElementById("reset-data").addEventListener("click", function () {
+    // let disableBtn = document.getElementById("startBtn");
+    // disableBtn.disabled = true;
+    // disableBtn.style.cursor = "not-allowed";
     
-//     clearInterval(intervalID);
+    clearInterval(intervalID);
+    
 
     
-//     document.querySelector("#box5").innerHTML = "00"; 
-//     document.querySelector("#box4").innerHTML = "00"; 
-//     document.querySelector("#box3").innerHTML = "00"; 
-//     document.querySelector("#box2").innerHTML = "00"; 
-//     document.querySelector("#box1").innerHTML = "00"; 
+    document.querySelector("#box5").innerHTML = "00"; 
+    document.querySelector("#box4").innerHTML = "00"; 
+    document.querySelector("#box3").innerHTML = "00"; 
+    document.querySelector("#box2").innerHTML = "00"; 
+    document.querySelector("#box1").innerHTML = "00"; 
 
     
-//     remainingSeconds = 0;
-//     totalseconds = 0;
+    remainingSeconds = 0;
+    totalseconds = 0;
 
     
-//     document.getElementById("startBtn").disabled = false;
-//     document.getElementById("pauseBtn").disabled = true;
-//     document.getElementById("reset-data").disabled = true;
-//     document.getElementById("submit-time").disabled = false;
+    let start_btn = document.getElementById("startBtn")
+    start_btn.disabled = true;
+    start_btn.style.cursor = "not-allowed"
+
+    document.getElementById("pauseBtn").disabled = true;
+    document.getElementById("reset-data").disabled = true;
+    let submit_enable =  document.getElementById("submit-time")
+    submit_enable.disabled = false;
+    submit_enable.style.cursor = "pointer"
+
 
     
-//     resetBtn.style.cursor = "not-allowed";
-//     disableBtn.style.cursor = "pointer";
-//     disablePause.style.cursor = "not-allowed";
+    resetBtn.style.cursor = "not-allowed";
+    // disableBtn.style.cursor = "pointer";
+    disablePause.style.cursor = "not-allowed";
 
     
-//     document.querySelector("#user_name").value = "";
-//     document.querySelector("#time1").value = "";
-//   });
-// }
+    document.querySelector("#user_name").value = "";
+    document.querySelector("#time1").value = "";
+  });
+}
 
-// resetTimer();
+resetTimer();
