@@ -1,12 +1,8 @@
 let totalseconds;
 let intervalID;
-let remainingSeconds;
-let gettime = document.getElementById("time1").value;
-// let userInput = nameInput
-// let userName = document.querySelector("#user_name").value;
-// console.log("user name : ",userName)
 
-// console.log("nameInput", nameInput);
+let gettime = document.getElementById("time1").value;
+
 let disableBtn = document.getElementById("startBtn");
 let disablePause = document.getElementById("pauseBtn");
 let resetBtn = document.getElementById("reset-data");
@@ -18,20 +14,26 @@ disablePause.disabled = true;
 resetBtn.style.cursor = "not-allowed";
 disableBtn.style.cursor = "not-allowed";
 disablePause.style.cursor = "not-allowed";
-let nameInput;
+// let userDEtails;
 function getInput() {
   document.querySelector("#submit-time").addEventListener("click", function () {
     nameInput = document.querySelector("#user_name").value;
+
     // userName = nameInput;
     let minuteInput = document.querySelector("#time1").value;
     let name = document.querySelector(".timer");
 
     let bigIntNuber = BigInt(minuteInput);
-    // let Minutes = Number(bigIntNuber);
 
-    // console.log("userInput", userInput);
+    localStorage.setItem("username", nameInput);
+    localStorage.setItem("minutes", bigIntNuber);
+    let userDEtails = localStorage.getItem("username");
+    let userMinute = localStorage.getItem("minutes");
+    console.log("this is a userDetails", userDEtails, userMinute);
 
-    totalseconds = bigIntNuber * BigInt(60);
+    totalseconds = BigInt(userMinute) * BigInt(60);
+
+    localStorage.setItem("totalseconds", totalseconds);
 
     function enableBtns() {
       // return false;
@@ -74,15 +76,6 @@ function getInput() {
     document.querySelector("#user_name").value = "";
     document.querySelector("#time1").value = "";
 
-    // let box1Style = document.querySelector(".box1")
-    // box1Style.style.width = "auto"
-
-    // let stylebox1 = box1Style.length
-    // console.log(stylebox1)
-
-    // document.getElementById('user_name').value = '';
-    // document.getElementById('time1').value = '';
-
     let disableSubmitBtn = document.getElementById("submit-time");
     disableSubmitBtn.disabled = true;
     disableSubmitBtn.style.cursor = "not-allowed";
@@ -90,17 +83,17 @@ function getInput() {
     let resetBtn = document.getElementById("reset-data");
     resetBtn.disabled = false;
     resetBtn.style.cursor = "pointer";
-    // disableSubmitBtn.style.backgroundColor = 'red';
 
     startInterval(totalseconds);
     // }
   });
 }
 getInput();
-console.log("this is a name input", nameInput);
 
 function startInterval(TotalSeconds) {
-  remainingSeconds = TotalSeconds;
+  let remaning = localStorage.getItem("totalseconds");
+  let remainingSeconds = BigInt(remaning);
+  // remainingSeconds = TotalSeconds;
   intervalID = setInterval(() => {
     let years = Number(remainingSeconds / BigInt(31536000));
     let days = Number((remainingSeconds % BigInt(31536000)) / BigInt(86400));
@@ -120,6 +113,10 @@ function startInterval(TotalSeconds) {
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
+
+
+    // console.log("all",formatedYear,fomatedDay,formattedHours,formattedMinutes,formattedSeconds)
+
     year.innerHTML = formatedYear;
     day.innerHTML = fomatedDay;
     hour.innerHTML = formattedHours;
@@ -127,6 +124,19 @@ function startInterval(TotalSeconds) {
     second.innerHTML = formattedSeconds;
 
     remainingSeconds -= BigInt(1);
+
+    // console.log("ak",BigInt(remaning)-BigInt(remainingSeconds))
+    let fulltime = localStorage.getItem('remaining')
+    // console.log("this is a full",BigInt(fulltime)-BigInt(remainingSeconds))
+    localStorage.setItem('remaining',remainingSeconds)
+
+
+
+    localStorage.setItem('formatedye',formatedYear)
+    localStorage.setItem('formatedDa',fomatedDay)
+    localStorage.setItem('formatedHo',formattedHours)
+    localStorage.setItem('formatedMi',formattedMinutes)
+    localStorage.setItem('formatedSe',formattedSeconds)
 
     if (remainingSeconds < 0) {
       clearInterval(intervalID);
@@ -147,55 +157,37 @@ function afterAlertShow() {
   clearInterval(intervalID);
   let disableBtn = document.getElementById("pauseBtn");
   let enableBtn = document.getElementById("startBtn");
+
   disableBtn.disabled = true;
   enableBtn.disabled = false;
 
   disableBtn.style.cursor = "not-allowed";
   enableBtn.style.cursor = "pointer";
-  // disableBtn.style.color = "";
-  // disableBtn.style.backgroundColor = "";
-  // enableBtn.style.color = "";
-  // enableBtn.style.backgroundColor = "";
 
-  let years = Number(remainingSeconds / BigInt(31536000));
-  let days = Number((remainingSeconds % BigInt(31536000)) / BigInt(86400));
-  let hours = Number((remainingSeconds % BigInt(86400)) / BigInt(3600));
-  let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
-  let seconds = Number(remainingSeconds % BigInt(60));
+  let remaning = localStorage.getItem("totalseconds");
+  let remainingSeconds = BigInt(remaning);
 
-  // let hours = Number(remainingSeconds / BigInt(3600));
+  // let years = Number(remainingSeconds / BigInt(31536000));
+  // let days = Number((remainingSeconds % BigInt(31536000)) / BigInt(86400));
+  // let hours = Number((remainingSeconds % BigInt(86400)) / BigInt(3600));
   // let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
-  // let seconds = remainingSeconds % BigInt(60);
+  // let seconds = Number(remainingSeconds % BigInt(60));
 
-  // let enable = document.getElementById("pauseBtn");
-  // enable.style.cursor = "default";
-  // let btnColor = document.getElementById("startBtn");
+  // console.log("all",years,days,hours,minutes,seconds)
 
-  // btnColor.style.cursor = "pointer";
+  // let formatedYear = years < 10 ? `0${years}` : years;
+  // let formatedDays = days < 10 ? `0${days}` : days;
+  // let formattedHours = hours < 10 ? `0${hours}` : hours;
+  // let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  // let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-  let formatedYear = years < 10 ? `0${years}` : years;
-  let formatedDays = days < 10 ? `0${days}` : days;
-  let formattedHours = hours < 10 ? `0${hours}` : hours;
-  let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  let formatedye = localStorage.getItem('formatedye') 
+  let formatedDa = localStorage.getItem('formatedDa') 
+  let formatedHo = localStorage.getItem('formatedHo') 
+  let formatedMi = localStorage.getItem('formatedMi') 
+  let formatedSe = localStorage.getItem('formatedSe') 
 
-  // let ak = document.querySelector(".input").value;
-
-  // let parentDiv = document.createElement("div");
-  // parentDiv.classList.add("container");
-
-  // let firstChild = document.createElement("div");
-  // firstChild.classList.add("timer-name");
-  // let heading = document.createElement("h3");
-  // heading.id = "timerName";
-  // heading.innerHTML = `Timer Name : ${nameInput}`;
-  // firstChild.appendChild(heading);
-  // parentDiv.appendChild(firstChild);
-
-  // let secondChild = document.createElement("div");
-  // secondChild.classList.add("stop-time");
-  // let h3 = document.createElement("h3");
-  // h3.classList.add("stopTime");
+  // console.log("all",formatedYear.formatedDays,formattedHours,formattedMinutes,formattedSeconds)
 
   let now = new Date();
   let hou = now.getHours();
@@ -203,62 +195,6 @@ function afterAlertShow() {
   let sec = now.getSeconds();
 
   let currentTime = `Stop Time - ${hou} : ${min} : ${sec}`;
-  // h3.innerHTML = `${currentTime} Remaining Time -  year-${formatedYear}: Day-${formatedDays}: Hour-${formattedHours}: Minute-${formattedMinutes}: Second-${formattedSeconds}`;
-  // secondChild.appendChild(h3);
-  // parentDiv.appendChild(secondChild);
-  // document.body.appendChild(parentDiv);
-
-  // const table = document.createElement("table");
-  // table.id = "timer-log-table";
-  // table.style.border = "1px solid black";
-  // table.style.marginTop = "20px";
-  // table.style.width = "100%";
-  // table.style.textAlign = "center";
-  // // table.style.backgroundColor = " #04AA6D"
-
-  // const thead = document.createElement("thead");
-  // const headerRow = document.createElement("tr");
-  // headerRow.style.color = "white"
-  // headerRow.style.fontSize="30px"
-  // headerRow.style.backgroundColor="#04AA6D"
-  // headerRow.style.border = "10px solid #ddd"
-
-  // const headers = ["Timer Name", "Stopped At", "Remaining Time"];
-  // headers.forEach((text) => {
-  //   const th = document.createElement("th");
-  //   th.textContent = text;
-  //   headerRow.appendChild(th);
-  // });
-  // thead.appendChild(headerRow);
-
-  // const valueRow = document.createElement("tr");
-  // valueRow.style.backgroundColor = "#f2f2f2"
-  // valueRow.style.fontSize = "20px"
-  // valueRow.style.color =" #4CAF50"
-
-  // const timerNameTd = document.createElement("td");
-  // timerNameTd.innerHTML = nameInput;
-  // timerNameTd.style.border = "1px solid black"
-
-  // const stopAtTd = document.createElement("td");
-  // stopAtTd.innerHTML = currentTime;
-  // stopAtTd.style.border = "1px solid black"
-
-  // const remainingTimeTd = document.createElement("td");
-  // remainingTimeTd.innerHTML = `${formatedYear}:${formatedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-  // remainingTimeTd.style.border = "1px solid black"
-
-  // valueRow.appendChild(timerNameTd);
-  // valueRow.appendChild(stopAtTd);
-  // valueRow.appendChild(remainingTimeTd);
-
-  // thead.appendChild(valueRow);
-
-  // const tbody = document.createElement("tbody");
-  // tbody.id = "log-body";
-
-  // table.appendChild(thead);
-  // table.appendChild(tbody);
 
   let table = document.querySelector("#table-container");
   if (table.rows.length === 0) {
@@ -281,46 +217,46 @@ function afterAlertShow() {
   let secondTd = document.createElement("td");
   secondTd.innerHTML = currentTime;
   let ThirdTd = document.createElement("td");
-  ThirdTd.innerHTML = `Remaining time - ${formatedYear}:${formatedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds+1}`;
+  ThirdTd.innerHTML = `Remaining time - ${formatedye}:${formatedDa}:${formatedHo}:${formatedMi}:${formatedSe}`;
   createTr.appendChild(firstTd);
   createTr.appendChild(secondTd);
   createTr.appendChild(ThirdTd);
-  // tablerow.appendChild(createTr)
-  // coutDownName.appendChild(createTr)
-  // stopStart.appendChild(createTr)
-  // remaningtimeTimepassed.appendChild(createTr)
 
-  // table.appendChild(tablerow)
   table.appendChild(createTr);
   // document.getElementById("table-container").appendChild(table);
+
+  // let secondstime = localStorage.getItem('totalseconds')
+  // let a = secondstime-remainingSeconds
+  // let b = BigInt(a)
+  // console.log("this is a",b)
 }
 
 function againStartInterval() {
   document.getElementById("startBtn").addEventListener("click", function () {
     alert("Are you sure start again coutDown");
-    againStar();
+    againStar();  
   });
 }
 againStartInterval();
 function againStar() {
-  startInterval(remainingSeconds);
+  let Totals = localStorage.getItem("totalseconds");
+  let remanin = localStorage.getItem('remaining') 
+  let ak =  Totals-remanin
+  console.log("this is a ak",ak)
+  // let remaningSEcond = remanin
+
+  console.log("this is remaning",remaningSEcond)
+
+  // console.log("ak",BigInt(Totals)-BigInt(remanin))
+  
+
+  
+
+  startInterval(remaningSEcond);
+
   let disableBtn = document.getElementById("startBtn");
   let enableBtn = document.getElementById("pauseBtn");
   let btnColor = document.getElementById("startBtn");
-
-  // if(!disableBtn){
-  //   disableBtn.style.cursor = "not-allowed"
-  // }
-  // if(!enableBtn){
-  //   enableBtn.style.cursor = "not-allowed"
-  // }
-  // disableBtn.style.cursor = 'not-allowed';
-
-  // disableBtn.style.cursor = 'not-allowed';
-  // enableBtn.style.cursor = 'not-allowed';
-  // if(disableBtn = true){
-  //   disableBtn.style.cursor ="not-allowed"
-  // }disableBtn.style.cursor = "not-allowed";
 
   disableBtn.disabled = true;
   enableBtn.disabled = false;
@@ -328,13 +264,9 @@ function againStar() {
   disableBtn.style.cursor = "not-allowed";
   enableBtn.style.cursor = "pointer";
 
-  // btnColor.style.color = "";
-  // btnColor.style.pauseBtnbackgroundColor = "";
-  // btnColor.style.cursor = "default";
-  // let enable = document.getElementById("pauseBtn");
-  // enable.style.cursor = "pointer";
-
-  let timePassed = totalseconds - remainingSeconds;
+  let totalseconds = localStorage.getItem("totalseconds");
+  let tim = totalseconds - remainingSeconds;
+  let timePassed = BigInt(tim);
 
   let years = Number(timePassed / BigInt(31536000));
   let days = Number((timePassed % BigInt(31536000)) / BigInt(86400));
@@ -347,25 +279,6 @@ function againStar() {
   let formattedHours = hours < 10 ? `0${hours}` : hours;
   let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
   let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-  // document.querySelector("#timer-name").innerHTML =
-
-  // let ak = document.querySelector(".input").value;
-
-  // let parentDiv = document.createElement("div");
-  // parentDiv.classList.add("container");
-
-  // let firstChild = document.createElement("div");
-  // firstChild.classList.add("timer-name");
-  // let heading = document.createElement("h3");
-  // heading.id = "timerName";
-  // heading.innerHTML = `Timer Name : ${nameInput}`;
-  // firstChild.appendChild(heading);
-  // parentDiv.appendChild(firstChild);
-
-  // let secondChild = document.createElement("div");
-  // secondChild.classList.add("start-time");
-  // let h3 = document.createElement("h3");
-  // h3.classList.add("startTime");
 
   let now = new Date();
   let hou = now.getHours();
@@ -373,74 +286,6 @@ function againStar() {
   let sec = now.getSeconds();
 
   let currentTime = `Start Time - ${hou} : ${min} : ${sec}`;
-  // h3.innerHTML = `${currentTime} Time Passed - ${formatedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-
-  // secondChild.appendChild(h3);
-  // parentDiv.appendChild(secondChild);
-  // document.body.appendChild(parentDiv);
-
-  //   const table = document.createElement("table");
-  //   table.id = "timer-log-table";
-  //   table.style.border = "1px solid black";
-  //   table.style.marginTop = "20px";
-  //   table.style.width = "100%";
-  //   table.style.textAlign = "center";
-  //   // table.style.backgroundColor = "green"
-
-  //   const thead = document.createElement("thead");
-  //    const headerRow = document.createElement("tr");
-  //   headerRow.style.color = "white"
-  //   headerRow.style.fontSize="30px"
-  //   headerRow.style.backgroundColor="#04AA6D"
-  //   headerRow.style.border = "10px solid #ddd"
-
-  //   // const headerRow = document.createElement("tr");
-  //   // headerRow.style.border = "5px solid black"
-  //   // headerRow.style.color = "blue"
-  //   // headerRow.style.fontSize="30px"
-  //   // headerRow.style.backgroundColor="#04AA6D"
-  //   // headerRow.style.border = "10px solid #ddd"
-
-  //   const headers = ["Timer Name", "Start At", "Time passed"];
-  //   // headers.style.color ="blue"
-  //   // headers.style.color =
-  //   headers.forEach((text) => {
-  //     const th = document.createElement("th");
-  //     th.textContent = text;
-  //     headerRow.appendChild(th);
-  //   });
-  //   thead.appendChild(headerRow);
-
-  //   const valueRow = document.createElement("tr");
-  //  valueRow.style.backgroundColor = "#f2f2f2"
-  //   valueRow.style.fontSize = "20px"
-  //   valueRow.style.color =" #4CAF50"
-
-  //   const timerNameTd = document.createElement("td");
-  //   // timerNameTd.style.border = "1px solid black"
-  //   timerNameTd.innerHTML = nameInput;
-  //   timerNameTd.style.border = "1px solid black"
-
-  //   const stopAtTd = document.createElement("td");
-  //   stopAtTd.innerHTML = currentTime;
-  //   stopAtTd.style.border = "1px solid black"
-  //   // stopAtTd.id = 'stopAt';
-
-  //   const remainingTimeTd = document.createElement("td");
-  //   remainingTimeTd.innerHTML = `${formatedYear}:${formatedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-  //   remainingTimeTd.style.border = "1px solid black"
-
-  //   valueRow.appendChild(timerNameTd);
-  //   valueRow.appendChild(stopAtTd);
-  //   valueRow.appendChild(remainingTimeTd);
-
-  //   thead.appendChild(valueRow);
-
-  //   const tbody = document.createElement("tbody");
-  //   tbody.id = "log-body";
-
-  //   table.appendChild(thead);
-  //   table.appendChild(tbody);
 
   //   document.getElementById("table-container").appendChild(table);
   let createTr = document.createElement("tr");
@@ -459,10 +304,6 @@ function againStar() {
 
 function resetTimer() {
   document.getElementById("reset-data").addEventListener("click", function () {
-    // let disableBtn = document.getElementById("startBtn");
-    // disableBtn.disabled = true;
-    // disableBtn.style.cursor = "not-allowed";
-
     clearInterval(intervalID);
 
     document.querySelector("#box5").innerHTML = "00";
