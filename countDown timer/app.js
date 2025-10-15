@@ -16,82 +16,89 @@ disableBtn.style.cursor = "not-allowed";
 disablePause.style.cursor = "not-allowed";
 // let userDEtails;
 function getInput() {
-  document.querySelector("#submit-time").addEventListener("click", function () {
-    nameInput = document.querySelector("#user_name").value;
+  document
+    .querySelector("#submit-time")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      // document.querySelector("#submit-time").addEventListener("click", function () {
+      nameInput = document.querySelector("#user_name").value;
 
-    // userName = nameInput;
-    let minuteInput = document.querySelector("#time1").value;
-    let name = document.querySelector(".timer");
+      // userName = nameInput;
+      let minuteInput = document.querySelector("#time1").value;
+      let name = document.querySelector(".timer");
 
-    let bigIntNuber = BigInt(minuteInput);
+      let bigIntNuber = BigInt(minuteInput);
 
-    localStorage.setItem("username", nameInput);
-    localStorage.setItem("minutes", bigIntNuber);
-    let userDEtails = localStorage.getItem("username");
-    let userMinute = localStorage.getItem("minutes");
-    console.log("this is a userDetails", userDEtails, userMinute);
+      localStorage.setItem("username", nameInput);
+      localStorage.setItem("minutes", bigIntNuber);
+      let userDEtails = localStorage.getItem("username");
+      let userMinute = localStorage.getItem("minutes");
+      console.log("this is a userDetails", userDEtails, userMinute);
 
-    totalseconds = BigInt(userMinute) * BigInt(60);
+      totalseconds = BigInt(userMinute) * BigInt(60);
+      // When we refresh the page, our data should not be lost. JavaScript language
+      localStorage.setItem("totalseconds", totalseconds);
+      let allTime = localStorage.getItem("totalseconds");
+      console.log("this is a total seconds", allTime);
 
-    localStorage.setItem("totalseconds", totalseconds);
-
-    function enableBtns() {
-      // return false;
-      if (bigIntNuber > 0) {
-        // let disableBtn = (document.getElementById("startBtn").disabled = false);
-        let disablePause = (document.getElementById(
-          "pauseBtn"
-        ).disabled = false);
-        document.getElementById("submit-time").disabled = true;
+      function enableBtns() {
+        // return false;
+        if (bigIntNuber > 0) {
+          // let disableBtn = (document.getElementById("startBtn").disabled = false);
+          let disablePause = (document.getElementById(
+            "pauseBtn"
+          ).disabled = false);
+          document.getElementById("submit-time").disabled = true;
+        }
+        return false;
       }
-      return false;
-    }
-    enableBtns();
+      enableBtns();
 
-    // console.log(totalseconds)
+      // console.log(totalseconds)
 
-    if (nameInput == "") {
-      alert("Please fill the Timer name");
+      if (nameInput == "") {
+        alert("Please fill the Timer name");
 
-      return false;
-    }
-    if (nameInput >= 0) {
-      alert("Please fill in the name without numbers");
+        return false;
+      }
+      if (nameInput >= 0) {
+        alert("Please fill in the name without numbers");
 
-      return false;
-    } else {
-      name.innerHTML = nameInput;
-    }
+        return false;
+      } else {
+        name.innerHTML = nameInput;
+      }
 
-    if (minuteInput == "") {
-      alert("Please fill the input Time in minutes");
-      return false;
-    }
-    if (minuteInput < 0) {
-      alert("Please fill a positive number for time");
-      return false;
-    }
-    disablePause.style.cursor = "pointer";
+      if (minuteInput == "") {
+        alert("Please fill the input Time in minutes");
+        return false;
+      }
+      if (minuteInput < 0) {
+        alert("Please fill a positive number for time");
+        return false;
+      }
+      disablePause.style.cursor = "pointer";
 
-    document.querySelector("#user_name").value = "";
-    document.querySelector("#time1").value = "";
+      document.querySelector("#user_name").value = "";
+      document.querySelector("#time1").value = "";
 
-    let disableSubmitBtn = document.getElementById("submit-time");
-    disableSubmitBtn.disabled = true;
-    disableSubmitBtn.style.cursor = "not-allowed";
+      let disableSubmitBtn = document.getElementById("submit-time");
+      disableSubmitBtn.disabled = true;
+      disableSubmitBtn.style.cursor = "not-allowed";
 
-    let resetBtn = document.getElementById("reset-data");
-    resetBtn.disabled = false;
-    resetBtn.style.cursor = "pointer";
+      let resetBtn = document.getElementById("reset-data");
+      resetBtn.disabled = false;
+      resetBtn.style.cursor = "pointer";
 
-    startInterval(totalseconds);
-    // }
-  });
+      startInterval(totalseconds);
+      // }
+    });
 }
 getInput();
 
 function startInterval(TotalSeconds) {
   let remaning = localStorage.getItem("totalseconds");
+  // localStorage.getItem('')
   let remainingSeconds = BigInt(remaning);
   // remainingSeconds = TotalSeconds;
   intervalID = setInterval(() => {
@@ -113,8 +120,6 @@ function startInterval(TotalSeconds) {
     let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-
-
     // console.log("all",formatedYear,fomatedDay,formattedHours,formattedMinutes,formattedSeconds)
 
     year.innerHTML = formatedYear;
@@ -126,17 +131,15 @@ function startInterval(TotalSeconds) {
     remainingSeconds -= BigInt(1);
 
     // console.log("ak",BigInt(remaning)-BigInt(remainingSeconds))
-    let fulltime = localStorage.getItem('remaining')
+    let fulltime = localStorage.getItem("remaining");
     // console.log("this is a full",BigInt(fulltime)-BigInt(remainingSeconds))
-    localStorage.setItem('remaining',remainingSeconds)
+    localStorage.setItem("remaining", remainingSeconds);
 
-
-
-    localStorage.setItem('formatedye',formatedYear)
-    localStorage.setItem('formatedDa',fomatedDay)
-    localStorage.setItem('formatedHo',formattedHours)
-    localStorage.setItem('formatedMi',formattedMinutes)
-    localStorage.setItem('formatedSe',formattedSeconds)
+    localStorage.setItem("formatedye", formatedYear);
+    localStorage.setItem("formatedDa", fomatedDay);
+    localStorage.setItem("formatedHo", formattedHours);
+    localStorage.setItem("formatedMi", formattedMinutes);
+    localStorage.setItem("formatedSe", formattedSeconds);
 
     if (remainingSeconds < 0) {
       clearInterval(intervalID);
@@ -181,11 +184,11 @@ function afterAlertShow() {
   // let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
   // let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-  let formatedye = localStorage.getItem('formatedye') 
-  let formatedDa = localStorage.getItem('formatedDa') 
-  let formatedHo = localStorage.getItem('formatedHo') 
-  let formatedMi = localStorage.getItem('formatedMi') 
-  let formatedSe = localStorage.getItem('formatedSe') 
+  let formatedye = localStorage.getItem("formatedye");
+  let formatedDa = localStorage.getItem("formatedDa");
+  let formatedHo = localStorage.getItem("formatedHo");
+  let formatedMi = localStorage.getItem("formatedMi");
+  let formatedSe = localStorage.getItem("formatedSe");
 
   // console.log("all",formatedYear.formatedDays,formattedHours,formattedMinutes,formattedSeconds)
 
@@ -234,29 +237,26 @@ function afterAlertShow() {
 function againStartInterval() {
   document.getElementById("startBtn").addEventListener("click", function () {
     alert("Are you sure start again coutDown");
-    againStar();  
+    againStar();
   });
 }
 againStartInterval();
 function againStar() {
   let Totals = localStorage.getItem("totalseconds");
-  let remanin = localStorage.getItem('remaining') 
-  let ak =  Totals-remanin
-  console.log("this is a ak",ak)
-  // let remaningSEcond = remanin
 
-  console.log("this is remaning",remaningSEcond)
+  let remanin = localStorage.getItem("remaining");
+  // let timer = remaningTime;
+  let remaningTime = Totals - remanin;
+  let time2 = Totals - remaningTime;
 
-  // console.log("ak",BigInt(Totals)-BigInt(remanin))
-  
+  // let z = remanin
+  console.log("this is a reming time", time2);
 
-  
-
-  startInterval(remaningSEcond);
+  startInterval(time2);
 
   let disableBtn = document.getElementById("startBtn");
   let enableBtn = document.getElementById("pauseBtn");
-  let btnColor = document.getElementById("startBtn");
+  // let btnColor = document.getElementById("startBtn");
 
   disableBtn.disabled = true;
   enableBtn.disabled = false;
@@ -264,8 +264,8 @@ function againStar() {
   disableBtn.style.cursor = "not-allowed";
   enableBtn.style.cursor = "pointer";
 
-  let totalseconds = localStorage.getItem("totalseconds");
-  let tim = totalseconds - remainingSeconds;
+  // let totalseconds = localStorage.getItem("totalseconds");
+  let tim = Totals - remanin;
   let timePassed = BigInt(tim);
 
   let years = Number(timePassed / BigInt(31536000));
@@ -340,3 +340,36 @@ function resetTimer() {
 }
 
 resetTimer();
+
+// window.addEventListener("DOMContentLoaded",startInterval)
+// function myFunctionOnReload() {
+
+// }
+
+// function reload(){
+// let formatedye = localStorage.getItem("formatedye");
+// let formatedDa = localStorage.getItem("formatedDa");
+// let formatedHo = localStorage.getItem("formatedHo");
+// let formatedMi = localStorage.getItem("formatedMi");
+// let formatedSe = localStorage.getItem("formatedSe");
+
+// }
+
+// window.onload = function() {
+//   startInterval()
+//   pauseInterval()
+//    againStartInterval()
+
+// function
+
+// window.onload = function () {
+  
+  
+  
+// };
+window.onload = function() {
+           
+        }
+
+
+
