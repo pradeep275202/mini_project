@@ -99,7 +99,8 @@ getInput();
 function startInterval(TotalSeconds) {
   let remaning = localStorage.getItem("totalseconds");
   // localStorage.getItem('')
-  let remainingSeconds = BigInt(remaning);
+  let remainingSeconds = BigInt(TotalSeconds);
+
   // remainingSeconds = TotalSeconds;
   intervalID = setInterval(() => {
     let years = Number(remainingSeconds / BigInt(31536000));
@@ -170,20 +171,6 @@ function afterAlertShow() {
   let remaning = localStorage.getItem("totalseconds");
   let remainingSeconds = BigInt(remaning);
 
-  // let years = Number(remainingSeconds / BigInt(31536000));
-  // let days = Number((remainingSeconds % BigInt(31536000)) / BigInt(86400));
-  // let hours = Number((remainingSeconds % BigInt(86400)) / BigInt(3600));
-  // let minutes = Number((remainingSeconds % BigInt(3600)) / BigInt(60));
-  // let seconds = Number(remainingSeconds % BigInt(60));
-
-  // console.log("all",years,days,hours,minutes,seconds)
-
-  // let formatedYear = years < 10 ? `0${years}` : years;
-  // let formatedDays = days < 10 ? `0${days}` : days;
-  // let formattedHours = hours < 10 ? `0${hours}` : hours;
-  // let formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  // let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
   let formatedye = localStorage.getItem("formatedye");
   let formatedDa = localStorage.getItem("formatedDa");
   let formatedHo = localStorage.getItem("formatedHo");
@@ -226,12 +213,14 @@ function afterAlertShow() {
   createTr.appendChild(ThirdTd);
 
   table.appendChild(createTr);
-  // document.getElementById("table-container").appendChild(table);
 
-  // let secondstime = localStorage.getItem('totalseconds')
-  // let a = secondstime-remainingSeconds
-  // let b = BigInt(a)
-  // console.log("this is a",b)
+  let Tabledata = {
+    userName: nameInput,
+    currentTime: currentTime,
+    information: `Remaining time - ${formatedye}:${formatedDa}:${formatedHo}:${formatedMi}:${formatedSe}`,
+  };
+  console.log(Tabledata);
+  localStorage.setItem("tableDATa", JSON.stringify(Tabledata));
 }
 
 function againStartInterval() {
@@ -242,12 +231,11 @@ function againStartInterval() {
 }
 againStartInterval();
 function againStar() {
-  let Totals = localStorage.getItem("totalseconds");
+  let Totals = BigInt(localStorage.getItem("totalseconds"));
+  let remanin = BigInt(localStorage.getItem("remaining"));
+  let time2 = remanin;
 
-  let remanin = localStorage.getItem("remaining");
-  // let timer = remaningTime;
-  let remaningTime = Totals - remanin;
-  let time2 = Totals - remaningTime;
+  // let timePassed = Totals - remanin;
 
   // let z = remanin
   console.log("this is a reming time", time2);
@@ -265,8 +253,10 @@ function againStar() {
   enableBtn.style.cursor = "pointer";
 
   // let totalseconds = localStorage.getItem("totalseconds");
-  let tim = Totals - remanin;
-  let timePassed = BigInt(tim);
+  // let tim = Totals - remanin;
+  // let timePassed = BigInt(tim);
+
+  let timePassed = Totals - remanin;
 
   let years = Number(timePassed / BigInt(31536000));
   let days = Number((timePassed % BigInt(31536000)) / BigInt(86400));
@@ -300,6 +290,14 @@ function againStar() {
   createTr.appendChild(ThirdTd);
   let table = document.querySelector("#table-container");
   table.appendChild(createTr);
+
+  let AgainStartData = {
+    user1: nameInput,
+    againstartTime: currentTime,
+    info: `Time Passed - ${formatedYear}:${formatedDays}:${formattedHours}:${formattedMinutes}:${formattedSeconds}`,
+  };
+  console.log(AgainStartData);
+  localStorage.setItem("DataOFAGainStart", JSON.stringify(AgainStartData));
 }
 
 function resetTimer() {
@@ -336,40 +334,42 @@ function resetTimer() {
     if (container) {
       container.innerHTML = "";
     }
+    localStorage.clear();
   });
 }
 
 resetTimer();
 
-// window.addEventListener("DOMContentLoaded",startInterval)
-// function myFunctionOnReload() {
+window.onload = function () {
+  let remaining = localStorage.getItem("remaining");
+  let username = localStorage.getItem("username");
 
-// }
+  if (remaining && username) {
+    let timerof = (document.querySelector(".timer").innerHTML = username);
 
-// function reload(){
-// let formatedye = localStorage.getItem("formatedye");
-// let formatedDa = localStorage.getItem("formatedDa");
-// let formatedHo = localStorage.getItem("formatedHo");
-// let formatedMi = localStorage.getItem("formatedMi");
-// let formatedSe = localStorage.getItem("formatedSe");
+    startInterval(BigInt(remaining));
 
-// }
+    document.getElementById("pauseBtn").disabled = false;
+    document.getElementById("pauseBtn").style.cursor = "pointer";
 
-// window.onload = function() {
-//   startInterval()
-//   pauseInterval()
-//    againStartInterval()
+    document.getElementById("reset-data").disabled = false;
+    document.getElementById("reset-data").style.cursor = "pointer";
 
-// function
+    document.getElementById("submit-time").disabled = true;
+    document.getElementById("submit-time").style.cursor = "not-allowed";
 
-// window.onload = function () {
-  
-  
-  
-// };
-window.onload = function() {
-           
-        }
+    let pauseData = localStorage.getItem("tableDATa");
+    let startData = localStorage.getItem("DataOFAGainStart");
+    console.log("this is a pause and start Data", pauseData, startData);
 
 
+  }
+};
 
+document.getElementById("openPopup").onclick = function () {
+      document.getElementById("popup").style.display = "block";
+    }
+
+    document.getElementById("closePopup").onclick = function () {
+      document.getElementById("popup").style.display = "none";
+    }

@@ -10,20 +10,30 @@
     <div class="main-container">
       <div class="second-container">
         <label class="name">Timer name : </label>
-        <input
-          class="input"
-          type="text"
-          id="user_name"
-          placeholder="Name of CountDown"
-        />
+
+        <button id="openPopup">Open</button>
+        <div class="popup" id="popup">
+          <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h3></h3>
+            <input type="text" placeholder="Timer Name" />
+            <button>Submit</button>
+          </div>
+        </div>
+
         <br /><br />
         <label class="name" for="">Time in minute :</label>
-        <input
-          type="number"
-          id="time1"
-          class="input"
-          placeholder="Time in minutes"
-        />
+
+        <!-- <button id="openPopup">Open</button>
+        <div class="popup" id="popup">
+          <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h3></h3>
+            <input type="text" placeholder="Timer Name" />
+            <button>Submit</button>
+          </div>
+        </div> -->
+
         <button class="submit" id="submit-time">submit</button>
         <div>
           <div>
